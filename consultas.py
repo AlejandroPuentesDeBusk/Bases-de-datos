@@ -68,6 +68,7 @@ class Consultas:
         except psycopg2.Error as e:
 
             print("Querry unsuccesful")
+            cur.close()
 
 
 #Añadir una querry a cualquier tabla
@@ -91,6 +92,7 @@ class Consultas:
 
             print("Querry unsuccesful")
             self.con.rollback()
+            cur.close()
 
 
 #Eliminar un registro NUEVO sin relacion a otras tablas o ELIMINAR USUARIO Y SUS PRETAMOS
@@ -117,6 +119,7 @@ class Consultas:
 
             print("Querry unsuccesful")
             self.con.rollback()
+            cur.close()
 
 
 #Objetemos los prestamos de cada usuario 
@@ -147,8 +150,48 @@ class Consultas:
         except psycopg2.Error as e:
 
             print("Querry unsuccesful")
+            cur.close()
 
 
+####JOIN GLOBAL PRUEBA FUE UN EXITO
+
+    def inner_join_g(self, p_pequeña, nom_tabla_1, nom_tabla_2, con_1):
+
+        cur = self.obtener_cursor()
+
+        ##usuarios.nombre
+
+        consulta_sql = sql.SQL("SELECT {tabla_1}.{pequeña}, {tabla_2}.* FROM {tabla_1} INNER JOIN {tabla_2} ON {tabla_1}.{id} = {tabla_2}.{id};" ).format(
+            pequeña= sql.Identifier(p_pequeña),
+            tabla_1 = sql.Identifier(nom_tabla_1),
+            tabla_2 = sql.Identifier(nom_tabla_2),
+            id = sql.Identifier(con_1),
+        
+        )
+
+
+        try:
+
+            cur.execute(consulta_sql)
+
+            column_title= []
+
+            for titulo in cur.description:
+                column_title.append(titulo[0])
+
+            print(column_title)
+
+            for result in cur.fetchall():
+
+                print(result)
+
+            cur.close()
+            print("Querry result succesfull")
+
+        except psycopg2.Error as e:
+
+            print("Querry unsuccesful")
+            cur.close()
 
 
 
@@ -173,13 +216,13 @@ def main():
     ejecutar.connect_libreria()
 
 
-
+#___________________________________________________________________________________________________
     ###VER TODOS LOS DATOS DE UNA TABLA
     #ejecutar.view_data("categorias")
+    ejecutar.view_data("libros")
 
-
+#_____________________________________________________________________________________________________
     #####Añadir datos a Autores
-
     #columnas_autores = ["nombre","apellido_paterno","nacionalidad","fecha_nacimiento"]
     #valores_autores = ["Gabriel","Garcia","Colombiana","1927-03-06"]
     #ejecutar.add_data("autores",columnas_autores,valores_autores)
@@ -188,15 +231,26 @@ def main():
     #columnas_editoriales = ["nombre","telefono","correo_electronico"]
     #valores_editoriales = ["Sudamericana","5678230965","sudamericana@gmail.com"] 
     #ejecutar.add_data("editoriales",columnas_editoriales,valores_editoriales)
-
-
+#__________________________________________________________________________________________________
     #ELIMINAR UN REGISTRO DE UNA TABLA
 
+    ######### ELiminar editorial
     #ejecutar.del_data("editoriales","id_editorial",3)
 
-    ###INNER JOIN entre USUARIOS Y PRESTAMOS
+#__________________________________________________________________________________________________
+    ####Uso inner_join_g  
 
-    ejecutar.inner_join()
+    #1. columna tabla 1
+    #2. nombre tabla 1
+    #3 nombre tabla 2
+    #4 dato en comun
+
+
+    #Para usuarios y prestamo
+    #ejecutar.inner_join_g("nombre","usuarios","prestamos","id_usuario")
+
+    #para autor y libros
+    ejecutar.inner_join_g("nombre","autores","libros","id_autor")
 
 
 if __name__ == "__main__":
