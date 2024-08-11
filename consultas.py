@@ -44,7 +44,7 @@ class Consultas:
     
 
 
-
+#Ver toda la info de una tabla
     def view_data(self,nom_tabla):
 
         cur = self.obtener_cursor()
@@ -70,11 +70,12 @@ class Consultas:
             print("Querry unsuccesful")
 
 
+#Añadir una querry a cualquier tabla
     def add_data(self, nom_tabla, columnas, valores):
 
         cur = self.obtener_cursor()
 
-        consulta_sql = sql.SQL("INSERT INTO {table} ({fields}) VALUES ({values}) ").format(
+        consulta_sql = sql.SQL("INSERT INTO {table} ({fields}) VALUES ({values});").format(
             table = sql.Identifier(nom_tabla),
             fields = sql.SQL(', ').join(map(sql.Identifier, columnas)),
             values = sql.SQL(', ').join(sql.Placeholder() for i in valores))
@@ -89,6 +90,38 @@ class Consultas:
         except psycopg2.Error as e:
 
             print("Querry unsuccesful")
+            self.con.rollback()
+
+#Eliminar un registro NUEVO sin relacion a otras tablas o ELIMINAR USUARIO Y SUS PRETAMOS
+
+    def del_data(self,nom_tabla,columna, id_thing):
+
+        cur = self.obtener_cursor()
+
+        consulta_sql = sql.SQL("DELETE FROM {table} WHERE {data_colum} = %s ;"). format(
+            table = sql.Identifier(nom_tabla),
+            data_colum = sql.Identifier(columna),
+
+        )
+
+        #Nota el id_thing es una TUPLA 
+
+        try:
+            cur.execute(consulta_sql, (id_thing,))
+            self.con.commit()
+            print(f"{id_thing} from table {nom_tabla}, was deleted succesfuly")
+            cur.close()
+
+        except psycopg2.Error as e:
+
+            print("Querry unsuccesful")
+            self.con.rollback()
+
+
+
+
+
+
 
         
 
@@ -108,12 +141,21 @@ def main():
     ejecutar.view_data("categorias")
 
 
-    #Añadir datos a Autores
+    #####Añadir datos a Autores
 
     #columnas_autores = ["nombre","apellido_paterno","nacionalidad","fecha_nacimiento"]
     #valores_autores = ["Gabriel","Garcia","Colombiana","1927-03-06"]
+    #ejecutar.add_data("autores",columnas_autores,valores_autores)
 
-    #iniciar.add_data("autores",columnas_autores,valores_autores)
+    ######Anadir editorial
+    #columnas_editoriales = ["nombre","telefono","correo_electronico"]
+    #valores_editoriales = ["Sudamericana","5678230965","sudamericana@gmail.com"] 
+    #ejecutar.add_data("editoriales",columnas_editoriales,valores_editoriales)
+
+
+    #ELIMINAR UN REGISTRO DE UNA TABLA
+
+    ejecutar.del_data("editoriales","id_editorial",3)
 
 
 if __name__ == "__main__":
