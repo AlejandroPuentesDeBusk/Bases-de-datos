@@ -33,9 +33,6 @@ class Consultas:
 
             print("Error, connection failed")
 
-        cur = self.con.cursor()
-
-
 
     #Asi podemos usar cur dentro de toda la clase
     def obtener_cursor(self):
@@ -48,13 +45,15 @@ class Consultas:
 
 
 
-    def view_data(self,n_tabla):
+    def view_data(self,nom_tabla):
 
         cur = self.obtener_cursor()
 
         consulta_sql = sql.SQL("SELECT * FROM {table};"). format(
-            table= sql.Identifier(n_tabla)
+            table= sql.Identifier(nom_tabla)
         )
+
+        #La ejecutamos
 
         try:
             cur.execute(consulta_sql)
@@ -71,23 +70,50 @@ class Consultas:
             print("Querry unsuccesful")
 
 
+    def add_data(self, nom_tabla, columnas, valores):
+
+        cur = self.obtener_cursor()
+
+        consulta_sql = sql.SQL("INSERT INTO {table} ({fields}) VALUES ({values}) ").format(
+            table = sql.Identifier(nom_tabla),
+            fields = sql.SQL(', ').join(map(sql.Identifier, columnas)),
+            values = sql.SQL(', ').join(sql.Placeholder() for i in valores))
+        
+        try: 
+
+            cur.execute(consulta_sql, valores)
+            self.con.commit()
+            print("Change succesfull and commited")
+            cur.close()
+
+        except psycopg2.Error as e:
+
+            print("Querry unsuccesful")
 
         
 
 
 
-
+        
 
 
 
 def main():
 
     #Objeto
-    iniciar = Consultas("localhost", "postgres", "0711white", "postgres")
+    ejecutar = Consultas("localhost", "postgres", "0711white", "postgres")
 
     #Ejecutamos
-    iniciar.connect_libreria()
-    iniciar.view_data("categorias")
+    ejecutar.connect_libreria()
+    ejecutar.view_data("categorias")
+
+
+    #Añadir datos a Autores
+
+    #columnas_autores = ["nombre","apellido_paterno","nacionalidad","fecha_nacimiento"]
+    #valores_autores = ["Gabriel","Garcia","Colombiana","1927-03-06"]
+
+    #iniciar.add_data("autores",columnas_autores,valores_autores)
 
 
 if __name__ == "__main__":
