@@ -92,6 +92,7 @@ class Consultas:
             print("Querry unsuccesful")
             self.con.rollback()
 
+
 #Eliminar un registro NUEVO sin relacion a otras tablas o ELIMINAR USUARIO Y SUS PRETAMOS
 
     def del_data(self,nom_tabla,columna, id_thing):
@@ -118,6 +119,38 @@ class Consultas:
             self.con.rollback()
 
 
+#Objetemos los prestamos de cada usuario 
+    def inner_join(self):
+
+        cur = self.obtener_cursor()
+
+        consulta_sql = ("SELECT usuarios.nombre, prestamos.* FROM usuarios INNER JOIN prestamos ON usuarios.id_usuario = prestamos.id_usuario;" )
+
+        try:
+
+            cur.execute(consulta_sql)
+
+            column_title= []
+
+            for titulo in cur.description:
+                column_title.append(titulo[0])
+
+            print(column_title)
+
+            for result in cur.fetchall():
+
+                print(result)
+
+            cur.close()
+            print("Querry result succesfull")
+
+        except psycopg2.Error as e:
+
+            print("Querry unsuccesful")
+
+
+
+
 
 
 
@@ -138,7 +171,11 @@ def main():
 
     #Ejecutamos
     ejecutar.connect_libreria()
-    ejecutar.view_data("categorias")
+
+
+
+    ###VER TODOS LOS DATOS DE UNA TABLA
+    #ejecutar.view_data("categorias")
 
 
     #####Añadir datos a Autores
@@ -155,7 +192,11 @@ def main():
 
     #ELIMINAR UN REGISTRO DE UNA TABLA
 
-    ejecutar.del_data("editoriales","id_editorial",3)
+    #ejecutar.del_data("editoriales","id_editorial",3)
+
+    ###INNER JOIN entre USUARIOS Y PRESTAMOS
+
+    ejecutar.inner_join()
 
 
 if __name__ == "__main__":
