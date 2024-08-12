@@ -55,14 +55,21 @@ class Consultas:
 
         #La ejecutamos
 
+        data_list= []
+
         try:
             cur.execute(consulta_sql)
 
+            for titulo in cur.description:
+                data_list.append(titulo[0])
+
             for result in cur.fetchall():
 
-                print(result)
-            
+                data_list.append(result)
+
             cur.close()
+            return data_list
+            
 
 
         except psycopg2.Error as e:
