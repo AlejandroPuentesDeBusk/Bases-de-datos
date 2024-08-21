@@ -234,6 +234,10 @@ def main():
     #valores_autores = ["Gabriel","Garcia","Colombiana","1927-03-06"]
     #ejecutar.add_data("autores",columnas_autores,valores_autores)
 
+    columnas_libros=["titulo","id_autor","id_editorial","año_publicacion","id_categoria","id_librero"]
+    valores_libros = ['El Amor en Tiempos De Colera', 3, 2, '1990-01-01', 2, 1]
+    ejecutar.add_data("libros",columnas_libros,valores_libros)
+
     ######Anadir editorial
     #columnas_editoriales = ["nombre","telefono","correo_electronico"]
     #valores_editoriales = ["Sudamericana","5678230965","sudamericana@gmail.com"] 
@@ -257,7 +261,7 @@ def main():
     #ejecutar.inner_join_g("nombre","usuarios","prestamos","id_usuario")
 
     #para autor y libros
-    ejecutar.inner_join_g("nombre","autores","libros","id_autor")
+    #ejecutar.inner_join_g("nombre","autores","libros","id_autor")
 
 
 if __name__ == "__main__":
