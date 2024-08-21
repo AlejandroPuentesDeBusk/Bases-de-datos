@@ -40,13 +40,13 @@ class Set_up():
         boton_editorial = tk.Button(self.frame, text="Editoriales", command=self.editoriales, width=40, height=20, padx=10, pady=10)
         boton_editorial.grid(row=1, column=0, padx=10, pady=10)
 
-        boton_libreros = tk.Button(self.frame, text="Libreros", command=self.probando, width=40, height=20, padx=10, pady=10)
+        boton_libreros = tk.Button(self.frame, text="Libreros", command=self.libreros, width=40, height=20, padx=10, pady=10)
         boton_libreros.grid(row=1, column=1, padx=10, pady=10)
 
         boton_usuarios = tk.Button(self.frame, text="Usuarios", command=self.usuarios, width=40, height=20, padx=10, pady=10)
         boton_usuarios.grid(row=1, column=2, padx=10, pady=10)
 
-        boton_prestamos = tk.Button(self.frame, text="Prestamos", command=self.probando, width=40, height=20, padx=10, pady=10)
+        boton_prestamos = tk.Button(self.frame, text="Prestamos", command=self.prestamos, width=40, height=20, padx=10, pady=10)
         boton_prestamos.grid(row=0, column=3, padx=10, pady=10)
 
         self.tk.mainloop()
@@ -525,6 +525,174 @@ class Set_up():
 
 
         self.tk.mainloop()
+
+
+
+
+
+    def guardar_prestamo(self):
+
+        # Recopilar los valores de todas las entradas y almacenarlos en la lista
+        self.datos_ingresados = [
+            int(self.entrada_id_usuario_p.get()),
+            int(self.entrada_id_libro_p.get()),
+            self.entrada_fecha_p.get(),
+            self.entrada_fecha_d.get()
+ 
+        ]
+        print(f"Datos ingresados: {self.datos_ingresados}")
+
+        valores = self.datos_ingresados
+
+        columnas_prestamos=["id_usuario","id_libro","fecha_prestamo","fecha_devolucion"]
+
+        self.ex.add_data("prestamos",columnas_prestamos,valores)
+
+
+    def eliminar_prestamo(self):
+
+        # Recopilar los valores de todas las entradas y almacenarlos en la lista
+        eliminar= int(self.entrada_id_prestamo.get())
+        print(f"Eliminar ID: {eliminar}")
+
+
+        columna="id_prestamo"
+
+        self.ex.del_data("prestamos",columna,eliminar)
+
+
+    def prestamos(self):
+        # VENTANA
+        self.tk.title("PRESTAMOS")
+        self.tk.geometry("1490x900")
+        self.tk.resizable(True, True)
+        self.window_1 = ttk.Frame(self.tk, padding="10")
+        self.window_1.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+        # Cuadro de texto titulo
+        self.cuadro_texto("ID USUSARIO", 2, 0, self.window_1)
+        self.entrada_id_usuario_p = self.cuadro_entrada(3, 0, self.window_1)
+
+        # Cuadro de texto autor
+        self.cuadro_texto("ID LIBRO", 4, 0, self.window_1)
+        self.entrada_id_libro_p= self.cuadro_entrada(5, 0, self.window_1)
+
+        self.cuadro_texto("FECHA DE PRESTAMOS", 6, 0, self.window_1)
+        self.entrada_fecha_p = self.cuadro_entrada(7, 0, self.window_1)
+
+        self.cuadro_texto("FECHA DE DEVOLUCION", 8, 0, self.window_1)
+        self.entrada_fecha_d = self.cuadro_entrada(9, 0, self.window_1)
+
+
+        self.cuadro_texto("ID PRESTAMO", 6, 2, self.window_1)
+        self.entrada_id_prestamo = self.cuadro_entrada(7, 2, self.window_1)
+
+
+
+        # PANTALLA DE TEXTO
+        self.mostrar = tk.Text(self.window_1, wrap='word', height=20, width=100)
+        self.mostrar.grid(row=1, column=0, pady=10)
+
+        # BOTON VER CATEGORIAS
+        ver_prestamo = tk.Button(self.window_1, text="Prestamos", command=lambda: self.show_any("prestamos", self.mostrar, 4), width=10, height=2, padx=10, pady=10)
+        ver_prestamo.grid(row=0, column=0, padx=10, pady=10)
+
+        # BOTON GUARDAR CATEGORIAS
+        guardar_prestamos = tk.Button(self.window_1, text="Registar Presmano", command=self.guardar_prestamo, width=15, height=2, padx=10, pady=10)
+        guardar_prestamos.grid(row=3, column=1, padx=10, pady=10)
+
+
+        # BOTON ELIMINAR DATOS###############################################3
+        guardar_datos = tk.Button(self.window_1, text="Eliminar Prestamo", command=self.eliminar_prestamo, width=15, height=2, padx=10, pady=10)
+        guardar_datos.grid(row=3, column=2, padx=10, pady=10)
+
+        #BOTON REGRESAR
+
+        back = tk.Button(self.window_1, text="Regresar", command= self.menu, width=10, height=2, padx=10, pady=10)
+        back.grid(row=0, column=2, padx=10, pady=10)
+
+
+
+        self.tk.mainloop()
+
+
+    def guardar_librero(self):
+
+        # Recopilar los valores de todas las entradas y almacenarlos en la lista
+        self.datos_ingresados = [
+            self.entrada_ubicacion.get(),
+            self.entrada_id_categoria_l.get(),
+ 
+        ]
+        print(f"Datos ingresados: {self.datos_ingresados}")
+
+        valores = self.datos_ingresados
+
+        columnas_libreros=["ubicacion","id_categoria"]
+
+        self.ex.add_data("libreros",columnas_libreros,valores)
+
+
+    def eliminar_librero(self):
+
+        # Recopilar los valores de todas las entradas y almacenarlos en la lista
+        eliminar= int(self.entrada_id_librero.get())
+        print(f"Eliminar ID: {eliminar}")
+
+
+        columna="id_librero"
+
+        self.ex.del_data("libreros",columna,eliminar)
+
+
+    def libreros(self):
+        # VENTANA
+        self.tk.title("PRESTAMOS")
+        self.tk.geometry("1490x900")
+        self.tk.resizable(True, True)
+        self.window_1 = ttk.Frame(self.tk, padding="10")
+        self.window_1.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+        # Cuadro de texto titulo
+        self.cuadro_texto("UBICACION", 2, 0, self.window_1)
+        self.entrada_ubicacion = self.cuadro_entrada(3, 0, self.window_1)
+
+        # Cuadro de texto autor
+        self.cuadro_texto("ID CATEGORIA", 4, 0, self.window_1)
+        self.entrada_id_categoria_l= self.cuadro_entrada(5, 0, self.window_1)
+
+
+        self.cuadro_texto("ID LIBRERO", 6, 2, self.window_1)
+        self.entrada_id_librero = self.cuadro_entrada(7, 2, self.window_1)
+
+
+
+        # PANTALLA DE TEXTO
+        self.mostrar = tk.Text(self.window_1, wrap='word', height=20, width=100)
+        self.mostrar.grid(row=1, column=0, pady=10)
+
+        # BOTON VER CATEGORIAS
+        ver_librero = tk.Button(self.window_1, text="Libreros", command=lambda: self.show_any("libreros", self.mostrar, 2), width=10, height=2, padx=10, pady=10)
+        ver_librero.grid(row=0, column=0, padx=10, pady=10)
+
+        # BOTON GUARDAR CATEGORIAS
+        guardar_librero = tk.Button(self.window_1, text="Registar Presmano", command=self.guardar_librero, width=15, height=2, padx=10, pady=10)
+        guardar_librero.grid(row=3, column=1, padx=10, pady=10)
+
+
+        # BOTON ELIMINAR DATOS###############################################3
+        eliminar_librero = tk.Button(self.window_1, text="Eliminar Librero", command=self.eliminar_librero, width=15, height=2, padx=10, pady=10)
+        eliminar_librero.grid(row=3, column=2, padx=10, pady=10)
+
+        #BOTON REGRESAR
+
+        back = tk.Button(self.window_1, text="Regresar", command= self.menu, width=10, height=2, padx=10, pady=10)
+        back.grid(row=0, column=2, padx=10, pady=10)
+
+
+
+        self.tk.mainloop()
+
 
 
 
