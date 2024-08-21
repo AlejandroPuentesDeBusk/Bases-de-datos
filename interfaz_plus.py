@@ -28,25 +28,25 @@ class Set_up():
 
         self.config()
         # BOTONES
-        boton_autores = tk.Button(self.frame, text="Autores", command=self.autores, width=40, height=20, padx=10, pady=10)
+        boton_autores = tk.Button(self.frame, text="Autores", command=self.autores, width=37, height=15, padx=10, pady=10)
         boton_autores.grid(row=0, column=0, padx=10, pady=10)
 
-        boton_cat = tk.Button(self.frame, text="Categorías", command=self.categorias, width=40, height=20, padx=10, pady=10)
+        boton_cat = tk.Button(self.frame, text="Categorías", command=self.categorias, width=37, height=15, padx=10, pady=10)
         boton_cat.grid(row=0, column=1, padx=10, pady=10)
 
-        boton_libros = tk.Button(self.frame, text="Libros", command=self.libros, width=40, height=20, padx=10, pady=10)
+        boton_libros = tk.Button(self.frame, text="Libros", command=self.libros, width=37, height=15, padx=10, pady=10)
         boton_libros.grid(row=0, column=2, padx=10, pady=10)
 
-        boton_editorial = tk.Button(self.frame, text="Editoriales", command=self.editoriales, width=40, height=20, padx=10, pady=10)
+        boton_editorial = tk.Button(self.frame, text="Editoriales", command=self.editoriales, width=37, height=15, padx=10, pady=10)
         boton_editorial.grid(row=1, column=0, padx=10, pady=10)
 
-        boton_libreros = tk.Button(self.frame, text="Libreros", command=self.libreros, width=40, height=20, padx=10, pady=10)
+        boton_libreros = tk.Button(self.frame, text="Libreros", command=self.libreros, width=37, height=15, padx=10, pady=10)
         boton_libreros.grid(row=1, column=1, padx=10, pady=10)
 
-        boton_usuarios = tk.Button(self.frame, text="Usuarios", command=self.usuarios, width=40, height=20, padx=10, pady=10)
+        boton_usuarios = tk.Button(self.frame, text="Usuarios", command=self.usuarios, width=37, height=15, padx=10, pady=10)
         boton_usuarios.grid(row=1, column=2, padx=10, pady=10)
 
-        boton_prestamos = tk.Button(self.frame, text="Prestamos", command=self.prestamos, width=40, height=20, padx=10, pady=10)
+        boton_prestamos = tk.Button(self.frame, text="Prestamos", command=self.prestamos, width=37, height=15, padx=10, pady=10)
         boton_prestamos.grid(row=0, column=3, padx=10, pady=10)
 
         self.tk.mainloop()
@@ -64,12 +64,12 @@ class Set_up():
 
     def cuadro_texto(self, texto, linea, columna, ventana):
         text = tk.Text(ventana, height=1, width=20)
-        text.grid(row=linea, column=columna, padx=10, pady=10)
+        text.grid(row=linea, column=columna, padx=10, pady=1)
         text.insert(tk.END, texto)
 
     def cuadro_entrada(self, linea, columna, ventana):
-        entrada = tk.Entry(ventana, width=80)
-        entrada.grid(row=linea, column=columna, padx=10, pady=10)
+        entrada = tk.Entry(ventana, width=40)
+        entrada.grid(row=linea, column=columna, padx=10, pady=1)
         return entrada
 
     def guardar_todos_los_datos_libros(self):
@@ -139,26 +139,26 @@ class Set_up():
 
 
         # PANTALLA DE TEXTO
-        self.mostrar = tk.Text(self.window_1, wrap='word', height=10, width=100)
-        self.mostrar.grid(row=1, column=0, pady=10)
+        self.mostrar = tk.Text(self.window_1, wrap='word', height=15, width=100)
+        self.mostrar.grid(row=1, column=0, pady=1)
 
         # BOTON VER LIBROS
         ver_libros = tk.Button(self.window_1, text="Inventario", command=lambda: self.show_any("libros", self.mostrar, 6), width=10, height=2, padx=10, pady=10)
-        ver_libros.grid(row=0, column=0, padx=10, pady=10)
+        ver_libros.grid(row=0, column=0, padx=1, pady=1)
 
         # BOTON GUARDAR DATOS
         guardar_datos = tk.Button(self.window_1, text="Guardar Datos", command=self.guardar_todos_los_datos_libros, width=15, height=2, padx=10, pady=10)
-        guardar_datos.grid(row=3, column=1, padx=10, pady=10)
+        guardar_datos.grid(row=3, column=1, padx=1, pady=1)
 
 
         # BOTON ELIMINAR DATOS###############################################3
         guardar_datos = tk.Button(self.window_1, text="Eliminar Libro", command=self.eliminar_libros, width=15, height=2, padx=10, pady=10)
-        guardar_datos.grid(row=3, column=2, padx=10, pady=10)
+        guardar_datos.grid(row=3, column=2, padx=1, pady=1)
 
         #BOTON REGRESAR
 
         back = tk.Button(self.window_1, text="Regresar", command= self.menu, width=10, height=2, padx=10, pady=10)
-        back.grid(row=0, column=2, padx=10, pady=10)
+        back.grid(row=0, column=2, padx=1, pady=1)
 
 
 
@@ -318,7 +318,7 @@ class Set_up():
 
 
         # PANTALLA DE TEXTO
-        self.mostrar = tk.Text(self.window_1, wrap='word', height=10, width=110)
+        self.mostrar = tk.Text(self.window_1, wrap='word', height=10, width=100)
         self.mostrar.grid(row=1, column=0, pady=10)
 
         # BOTON VER CATEGORIAS
@@ -403,7 +403,7 @@ class Set_up():
 
 
         # PANTALLA DE TEXTO
-        self.mostrar = tk.Text(self.window_1, wrap='word', height=10, width=110)
+        self.mostrar = tk.Text(self.window_1, wrap='word', height=10, width=100)
         self.mostrar.grid(row=1, column=0, pady=10)
 
         # BOTON VER EDITORIALES
@@ -501,7 +501,7 @@ class Set_up():
 
 
         # PANTALLA DE TEXTO
-        self.mostrar = tk.Text(self.window_1, wrap='word', height=5, width=120)
+        self.mostrar = tk.Text(self.window_1, wrap='word', height=5, width=100)
         self.mostrar.grid(row=1, column=0, pady=10)
 
         # BOTON VER CATEGORIAS
@@ -591,25 +591,25 @@ class Set_up():
 
         # PANTALLA DE TEXTO
         self.mostrar = tk.Text(self.window_1, wrap='word', height=20, width=100)
-        self.mostrar.grid(row=1, column=0, pady=10)
+        self.mostrar.grid(row=1, column=0, pady=1)
 
         # BOTON VER CATEGORIAS
         ver_prestamo = tk.Button(self.window_1, text="Prestamos", command=lambda: self.show_any("prestamos", self.mostrar, 4), width=10, height=2, padx=10, pady=10)
-        ver_prestamo.grid(row=0, column=0, padx=10, pady=10)
+        ver_prestamo.grid(row=0, column=0, padx=10, pady=1)
 
         # BOTON GUARDAR CATEGORIAS
         guardar_prestamos = tk.Button(self.window_1, text="Registar Presmano", command=self.guardar_prestamo, width=15, height=2, padx=10, pady=10)
-        guardar_prestamos.grid(row=3, column=1, padx=10, pady=10)
+        guardar_prestamos.grid(row=3, column=1, padx=10, pady=1)
 
 
         # BOTON ELIMINAR DATOS###############################################3
         guardar_datos = tk.Button(self.window_1, text="Eliminar Prestamo", command=self.eliminar_prestamo, width=15, height=2, padx=10, pady=10)
-        guardar_datos.grid(row=3, column=2, padx=10, pady=10)
+        guardar_datos.grid(row=3, column=2, padx=10, pady=1)
 
         #BOTON REGRESAR
 
         back = tk.Button(self.window_1, text="Regresar", command= self.menu, width=10, height=2, padx=10, pady=10)
-        back.grid(row=0, column=2, padx=10, pady=10)
+        back.grid(row=0, column=2, padx=10, pady=1)
 
 
 
@@ -696,7 +696,5 @@ class Set_up():
 
 
 
-
 run = Set_up()
-
 run.menu()
